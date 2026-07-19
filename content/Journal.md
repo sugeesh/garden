@@ -1,0 +1,1 @@
+[19/07/2026] [[Why I Left My Associate Director Role to Go All-In on AI]]
