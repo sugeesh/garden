@@ -9,27 +9,13 @@ This is not a polished blog. Some notes are complete, some are still growing, an
 
 ### [[Journal]]
 Dated entries on decisions, transitions, and what I'm working through and the reasoning as it happens, not just the outcome.
-### Notes
-Short thoughts, explanations, references, and things I want to remember.
-### My Projects
+### [[My Projects]]
 My personal ongoing initiatives.
-### Library
+### [[Library]]
 Useful links, books, tools, videos, articles, and resources I want to keep close.
-### Experiments
+### [[Experiments]]
 Experiments with different systems 
-### Random Thoughts
+### [[Random Thoughts]]
 Random thoughts coming to my mind, so I can focus of them whenever I have free time. ( Thinking better than looking into specific thoughts rather than scrolling down on social-media )
 
-## Note status
-Some pages are more mature than others:
-
-- **Seed** — a rough idea or early note
-- **Growing** — actively being developed
-- **Evergreen** — polished and maintained
-- **Archived** — old, outdated, or no longer maintained
-
 Thanks for visiting. Feel free to wander around.
-[[Random Thoughts]]
-[[My Projects]]
-[[Library]]
-[[Experiments]]
