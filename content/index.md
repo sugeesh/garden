@@ -9,8 +9,8 @@ This is not a polished blog. Some notes are complete, some are still growing, an
 
 ### [[Journal]]
 Dated entries on decisions, transitions, and what I'm working through and the reasoning as it happens, not just the outcome.
-### [[My Projects]]
-My personal ongoing initiatives.
+### [[Study Sessions]]
+Regular AI study sessions with a small group of engineers.
 ### [[Library]]
 Useful links, books, tools, videos, articles, and resources I want to keep close.
 ### [[Experiments]]
