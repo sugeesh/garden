@@ -1,0 +1,3 @@
+I strongly believe that if you really understand something correctly, you should be able to teach it in a simple manner to anybody. Whether they understand it or not is up to them, but you should be able to provide the explanation flawlessly without struggling throughout the story.
+
+This was a major idea that I have been having during the last 10/15 years. But I thought of writing it here after following "Andrej Karpathy" videos about neural networks and Language Model foundations; it seems this is the best guy on earth to show that. His explanations and building of concepts from practical simple examples are out of this world. What a man. I need to improve myself so that I can explain at that level in any project that I am working on.
