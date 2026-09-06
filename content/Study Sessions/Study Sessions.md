@@ -20,3 +20,6 @@ We’re not approaching this as experts with all the answers. We’re creating a
 28/07/2026 [[AI Study Sessions — Session One]]
 04/08/2026 [[AI Study Sessions — Session Two]]
 11/08/2026 [[AI Study Sessions — Session Three]]
+21/08/2026 [[AI Study Sessions — Session Four]]
+28/08/2026 [[AI Study Sessions — Session Five]]
+04/09/2026 [[AI Study Sessions — Session Six]]

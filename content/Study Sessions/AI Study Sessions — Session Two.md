@@ -1,3 +1,4 @@
+Date - 04/08/2026
 
 Our original plan was to continue directly into Chapter 2 of Chip Huyen’s _AI Engineering_. However, we realised that several ideas in the chapter would be difficult to understand properly without first knowing what happens inside a language model.
 

@@ -1,127 +1,135 @@
+Date - 11/08/2026
 
-> [!abstract] Session summary This session covered the Karpathy's whole micrograd video. The first half builds a **computation graph** out of a plain math expression and teaches **backpropagation** over it. The second half builds a small **neural network** (Neuron → Layer → MLP) on top of that same engine. By the end I could follow the full hierarchy: **values → neurons → layers → MLP**, which is the hardest conceptual jump in the video.
+Our plan for this session was to complete the remaining half of Andrej Karpathy's _makemore_ part 1, which reframes the counting bigram model from Session Two as a neural network.
 
-## Part 1 — The computation graph & backprop
+We changed direction again before we started. That second half opens by calling `loss.backward()` and stepping the weights, and neither of those means anything without a working grasp of how gradients are computed. Reading the code would have been possible; understanding it would not.
 
-### The `Value` object (the building block)
+So we spent this session on Andrej Karpathy's _The Spelled-Out Intro to Neural Networks and Backpropagation: Building micrograd_ instead. It builds a tiny automatic differentiation engine from nothing, then builds a small neural network on top of it. It is the missing prerequisite rather than a diversion.
 
-Every single number in the graph is a `Value` object. Each one stores:
+## Why we changed direction
 
-- **`data`** — the actual number from the forward pass.
-- **`grad`** — the derivative ∂L∂this\frac{\partial L}{\partial \text{this}} ∂this∂L​, filled in during the backward pass (starts at 0).
-- the **operation** that created it (`+`, `*`, `tanh`, …).
-- **pointers to its parent nodes** — the Values that produced it.
+Session Two deliberately stopped at the counting model: probability tables, sampling, negative log likelihood, and no learning of any kind. Training there meant walking the dataset once and tallying.
 
-> [!note] Why the parent pointers matter Those pointers are what let backprop **walk the graph backward**. Without them there's no trail to follow from the output back to the inputs.
+Everything after that point in the series involves the same four steps repeated many times over: forward pass, loss, backward pass, update. Backpropagation is the third of those, and it silently underpins every model we will look at from here to the Transformer.
+
+The judgement we made was that one session spent on backpropagation would make the following four sessions comprehensible rather than memorised, so it was worth the delay. It remains a timeboxed detour. The destination is still the application layer.
+
+## What we covered
+
+The video has two halves, and so did the session. The first half builds a computation graph and performs backpropagation across it. The second half assembles a small neural network out of that same machinery. The hardest conceptual jump is the hierarchy that emerges by the end: values, then neurons, then layers, then a multi-layer perceptron.
+
+### The `Value` object
+
+Every single number in the graph is a `Value` object rather than a plain float. Each one stores four things:
+
+- `data` — the number itself, produced during the forward pass
+- `grad` — the derivative of the final output with respect to this value, filled in during the backward pass and starting at zero
+- the operation that created it (`+`, `*`, `tanh`, and so on)
+- pointers to its parent nodes, which are the values that produced it
+
+The parent pointers are what make backpropagation possible at all. Without them there is no trail to follow backwards from the output to the inputs.
 
 ### Building the graph
 
-When I write `d = a * b + c`, I'm not just getting a number — each operation creates a **new** `Value` node that remembers _which operation made it_ and _who its parents were_. So `a * b` is a new node that knows "I was born from a multiply, my parents are `a` and `b`."
+Writing `d = a * b + c` does not simply produce a number. Each operation creates a new `Value` node that records which operation made it and which values were its parents. The node produced by `a * b` knows that it came from a multiplication and that its parents were `a` and `b`.
 
-That stored operation is exactly what tells backprop **which local derivative rule** to apply later.
+That stored operation is exactly what tells the backward pass which local derivative rule to apply later.
 
-### Local derivatives + the chain rule
+### Local derivatives and the chain rule
 
-The key insight: **each node only needs its own local derivative.** No node ever needs the big picture.
+The central insight of the first half is that each node only needs to know its own local derivative. No node ever needs a view of the whole graph.
 
-|Operation|What it does to the incoming gradient|
-|---|---|
-|**`+` (add)**|passes the gradient straight through, unchanged|
-|**`*` (multiply)**|swaps in the _other_ input|
-|**`tanh`**|multiplies by 1−tanh⁡2(x)1 - \tanh^2(x) 1−tanh2(x)|
+Addition passes the incoming gradient straight through, unchanged. Multiplication swaps in the other input. The `tanh` node multiplies by `1 - tanh(x)**2`.
 
-The **chain rule** then stitches all those local pieces together into the full derivative. Local rule × what came from behind = gradient at this node.
+The chain rule then stitches those local pieces together into the full derivative. At every node the calculation is the same: the local rule multiplied by whatever gradient arrived from behind.
 
-### Forward pass vs backward pass
+### Forward pass and backward pass
 
-Getting the gradient is a **two-pass** process:
+Obtaining a gradient is a two-pass process.
 
-1. **Forward pass** — feed inputs in, compute left → right to the final output. The graph records every operation and value. Now I have all the `data`, but **no gradients yet**.
-2. **Backward pass (backprop)** — start at the very end, **seed with `grad = 1`** (∂L∂L=1\frac{\partial L}{\partial L} = 1 ∂L∂L​=1), then walk backward, applying each node's local rule × the incoming gradient. This fills in `grad` on every node.
+The **forward pass** feeds inputs in and computes left to right until the final output. The graph records every operation and every value along the way. At the end of it we have all the data and no gradients.
 
-> [!important] The "1" that seeds backprop It's `L.grad = 1` because the output's derivative _with respect to itself_ is 1. It is **not** the loss data value.
+The **backward pass** starts at the very end, seeds the final node with a gradient of one, then walks backwards applying each node's local rule multiplied by the incoming gradient. This fills in `grad` on every node in the graph.
 
-### The manual "nudge" demo (gradient descent, previewed)
+The seed value of one is worth stating precisely, because it is easy to misread. The output's derivative with respect to itself is one. It has nothing to do with the numerical value of the loss.
 
-Before the neural net, Karpathy does a mini-demo: run backward to get each input's gradient, then nudge every input a little in the direction of its gradient — and the output goes **up**, just as the gradients predicted.
+### The manual nudge demonstration
 
-The update rule for each input:
+Before the neural network appears, there is a small demonstration of the idea of learning. Run the backward pass to obtain each input's gradient, then move every input a little in the direction of its gradient. The output goes up, exactly as the gradients predicted.
 
-new data=old data+(step size×grad)\text{new data} = \text{old data} + (\text{step size} \times \text{grad})new data=old data+(step size×grad)
+The update rule for each input is:
 
-> [!tip] Why multiply by the gradient instead of just using its sign?
-> 
-> - **Size matters, not just direction** — a big gradient means a strong effect, so that input moves more.
-> - **The sign falls out automatically** — a negative grad makes the term negative, so the input goes _down_ on its own. I never have to reason about signs; the math handles direction _and_ strength in one move.
+```
+new data = old data + (step size × grad)
+```
 
-This is the whole idea of learning in miniature: **gradient tells direction, small step moves you that way.** (In real training we step in the _opposite_ direction to make loss go _down_ — that's gradient descent.)
+Multiplying by the gradient rather than only using its sign matters for two reasons. Size is information: a large gradient means a strong effect, so that input should move further. And the sign takes care of itself, because a negative gradient makes the whole term negative and the input moves down without anyone reasoning about direction.
 
----
+This is learning in miniature. The gradient supplies the direction, and a small step moves along it. In real training the step is taken in the opposite direction so that the loss goes down, which is what gradient descent means.
 
-## Part 2 — From one neuron to a network
+### The artificial neuron
 
-### The neuron (a.k.a. perceptron)
+A single neuron multiplies each input by its weight, sums the results, adds a bias, and squashes the total through an activation function:
 
-A single artificial neuron:
+```
+y = tanh(w1*x1 + w2*x2 + ... + b)
+```
 
-y=tanh⁡ ⁣(∑iwixi+b)y = \tanh\!\left(\sum_i w_i x_i + b\right)y=tanh(i∑​wi​xi​+b)
+A neuron holds one weight per input plus exactly one bias, which means a neuron with three inputs owns four values, and one with two inputs owns three. It is not a single number.
 
-- multiply each input by its **weight**
-- sum them all
-- add a **bias**
-- squash through an **activation** (`tanh`)
+Internally the neuron builds the same multiply-then-add graph from the first half of the session, feeding into a final `tanh` node. The building blocks do not change; only the arrangement does.
 
-> [!note] How many Values does a neuron hold? **One weight per input, plus exactly one bias.** So a neuron with 3 inputs holds **4 Values** (3 weights + 1 bias); with 2 inputs, **3 Values**. Not just one.
-
-Inside, the neuron builds the _same_ multiply-then-add graph from Part 1 — w1x1+w2x2+⋯+bw_1x_1 + w_2x_2 + \dots + b w1​x1​+w2​x2​+⋯+b — feeding into a final `tanh` node. Same building blocks I already know.
-
-> [!info] `Value` vs `Neuron` — two different levels `Value` = the low-level graph node (each weight, each intermediate result). `Neuron` = a **container** that _owns_ a bundle of Values (its weights + bias). The neuron doesn't replace Value; it holds a handful of them.
+The distinction between the two levels is worth keeping clear. A `Value` is a low-level graph node, one per weight and one per intermediate result. A `Neuron` is a container that owns a bundle of those values. The neuron does not replace the value; it holds a handful of them.
 
 ### Activation functions
 
-`tanh` squashes to [−1,1][-1, 1] [−1,1]; `sigmoid` squashes to [0,1][0, 1] [0,1]. But **squashing the range isn't the real reason** we use them.
+`tanh` squashes its input into the range −1 to 1, and `sigmoid` squashes into 0 to 1. Squashing the range is the visible behaviour, but it is not the real reason activations exist.
 
-> [!important] The real job: non-linearity Without an activation, stacking layers is pointless — a chain of linear steps collapses into **one** linear step, so the network can only draw straight lines. The activation adds a **bend** at each layer, and _that's_ what lets the network learn curves and complicated shapes.
-> 
-> For following the video, "it squashes into a range" is a fine working description — just keep the footnote that the deeper purpose is the bend.
+Without an activation, stacking layers achieves nothing. A chain of linear steps collapses into a single linear step, so the network can only ever draw straight lines. The activation introduces a bend at each layer, and that bend is what allows the network to represent curves and more complicated shapes.
 
-### The three classes: Neuron → Layer → MLP
+For following the code, "it squashes into a range" is an adequate working description. The non-linearity is the footnote that matters later.
 
-Boxes inside boxes. Each class has the **same three methods**.
+### Neuron, Layer, and MLP
 
-**Neuron**
+The second half is three classes, each containing the previous one, and each with the same three methods.
 
-- **constructor** — creates its weights + bias as random Values.
-- **`__call__`** — takes inputs, does w⋅x+bw \cdot x + b w⋅x+b then `tanh`, returns the result.
-- **`parameters()`** — returns its weights + bias in one list.
+A **Neuron** creates its weights and bias as random values in its constructor, computes `w·x + b` followed by `tanh` when called, and returns its weights and bias from `parameters()`.
 
-**Layer** = a row of neurons side by side.
+A **Layer** is a row of neurons side by side. Its constructor takes the number of inputs and the number of neurons and builds them. When called, it feeds the same inputs to every neuron and collects one output from each, so five neurons produce five outputs. Its `parameters()` gathers the weights and biases of all its neurons.
 
-- **constructor** — you say _how many inputs_ and _how many neurons_; it builds them.
-- **`__call__`** — feeds the **same inputs** to every neuron, collects each neuron's one output into a list. → _5 neurons ⇒ 5 outputs._
-- **`parameters()`** — gathers weights + biases from all its neurons.
+An **MLP**, or multi-layer perceptron, is a stack of layers in sequence. Its constructor takes the layer sizes and builds them. When called, it passes the inputs through each layer in turn, with one layer's outputs becoming the next layer's inputs, and the final layer's output as the answer. Its `parameters()` gathers every weight and bias in the whole network.
 
-**MLP** (Multi-Layer Perceptron) = a stack of layers in a row.
+The hierarchy in one line: an MLP is a list of layers, a layer is a list of neurons, and a neuron is a bundle of values.
 
-- **constructor** — you give the sizes; it builds all the layers.
-- **`__call__`** — passes inputs through each layer in turn; **one layer's outputs become the next layer's inputs**; the last layer's output is the final answer.
-- **`parameters()`** — gathers every weight + bias from every layer.
+### `__call__` and why the code reads so cleanly
 
-> [!summary] The hierarchy **MLP is a list of layers · Layer is a list of neurons · Neuron is a bundle of Values.** The outputs of one layer feed the next, all the way through.
-
-### `__call__` — the Python trick that makes it elegant
-
-`__call__` is a real built-in Python **dunder** (double-underscore) method, not something Karpathy invented. Defining it makes an instance **callable** like a function:
-
-python
+`__call__` is a standard Python dunder method rather than anything specific to micrograd. Defining it makes an instance callable in the same way as a function:
 
 ```python
 n = Neuron(2)
-out = n(x)        # secretly runs n.__call__(x)
+out = n(x)        # runs n.__call__(x)
 ```
 
-Because of this, a Layer can call each neuron with `neuron(x)`, and the MLP can call each layer the same way. Everything becomes callable, so the code reads like data flowing through a chain of functions — **calls inside calls**, a manager passing work down to each worker.
+Because of this, a layer can invoke each of its neurons with `neuron(x)`, and an MLP can invoke each of its layers the same way. Everything in the hierarchy becomes callable, so the code reads as data flowing through a chain of functions rather than as objects being manipulated.
 
-### `parameters()` — why it exists
+### Why `parameters()` exists
 
-During training I need to grab **every** weight and bias so I can nudge each one. `parameters()` is the convenient "give me everything I'm allowed to tune" list, gathered up the hierarchy (neuron → layer → MLP).
+Training requires reaching every weight and bias in order to nudge each one. `parameters()` is the convenient list of everything that is allowed to be tuned, gathered up the hierarchy from neuron to layer to network. It is the same list that the training loop will iterate over in the next session.
+
+[[backprop_visualizer.gif]]
+
+## Next session
+
+We return to makemore and finish the second half of part 1, rebuilding the bigram model as a one-layer neural network.
+
+That means one-hot encoding, a weight matrix, logits, softmax, negative log likelihood as a loss, and gradient descent doing the work that counting did in Session Two. The expectation is that it arrives at roughly the same result as the counting model, and the interesting question is why the more complicated route is worth taking.
+
+## Resources
+
+- [Andrej Karpathy — _The Spelled-Out Intro to Neural Networks and Backpropagation: Building micrograd_](https://www.youtube.com/watch?v=VMj-3S1tku0)
+- [micrograd repository](https://github.com/karpathy/micrograd)
+
+## Slides
+[[micrograd_session3.pdf]]
+
+## Session

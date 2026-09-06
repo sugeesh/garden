@@ -1,3 +1,4 @@
+Date - 28/07/2026
 
 Our first session of the AI study group. We're working through Chip Huyen's _AI Engineering_ (2024) over 10 sessions, one chapter each, to build a foundational understanding of AI applications. This was the introductory session on Chapter 1, a broad pass over the landscape, with a note that the book has roughly a two-year industry gap we'll be filling in as we go.
 

@@ -249,48 +249,6 @@ A tool-call response, as plain text, for a tool that had been removed. The model
 
 That's the ceiling. Not a config problem — a capability problem. A 3B model handed a multi-thousand-token system prompt full of schemas doesn't reliably distinguish "here is how tools work" from "emit something that looks like this." Community guidance says 14B+ for reliable tool use, and this is what that guidance is describing.
 
-## Part three: the config-surface trap
-
-I switched to Gemini to prove the framework was fine. This should have taken five minutes. It took hours and I never finished it.
-
-The error, on every attempt:
-
-```
-FailoverError: The selected model was not found by the provider.
-```
-
-Meanwhile `openclaw models list` showed `google/gemini-2.5-flash` tagged `default,configured`, `openclaw models status` showed the provider with `Auth: yes`, and a raw curl against Google's API with the same key listed `models/gemini-2.5-flash` as available.
-
-Every diagnostic said it was configured. Every request said it wasn't.
-
-The reason took a long time to find, because credentials in this build live in **four** places:
-
-|Location|Written by|Read by|
-|---|---|---|
-|`~/.openclaw/openclaw.json`|`openclaw config set`|global config|
-|`~/.openclaw/agents/<id>/agent/models.json`|onboarding|per-agent model config|
-|`~/.openclaw/agents/<id>/agent/auth-profiles.json`|`models auth paste-api-key`|per-agent credentials|
-|`~/.openclaw/agents/<id>/agent/openclaw-agent.sqlite`|`models auth add`|**the runtime**|
-
-I had been editing the first. The runtime reads the last. Every fix applied cleanly, validated, and changed nothing.
-
-`openclaw models auth list` finally showed the truth:
-
-```
-Profiles:
-- ollama:default [ollama/api_key]
-```
-
-No Google credential at all for the `main` agent. The setup assistant agent worked because it resolved from a different store.
-
-Adding one exposed the last trap:
-
-```
-- google:default [google/token]     ← what add stored
-- ollama:default [ollama/api_key]   ← what it needed to be
-```
-
-`models auth add` saved an API key as a **token**. Google expects `?key=` or `x-goog-api-key`, not a Bearer token. The correct command, `paste-api-key`, refused to parse under every flag ordering I tried. I stopped there.
 
 ---
 
@@ -381,7 +339,6 @@ My original goal was a crawler: fetch pages, extract structured data. That is sq
 
 - **Local Ollama, benchmarked and stable.** 167 tok/s prefill, ~15 tok/s generation, no corruption. Genuinely good at small-prompt extraction — the original goal.
 - **OpenClaw on a local 3B: works as a chatbot, fails as an agent.** Below the capability threshold, and no config fixes that.
-- **Gemini: unresolved.** Correct key, correct model id, wrong credential _type_ in the one store that counts, and the command to fix it wouldn't parse.
 
 Would I do it again? The benchmarking, yes — I now understand this hardware properly, and that knowledge transfers to every local model I run. The framework wrestling, no. I'd have pointed it at a cloud model on day one to establish a working baseline, _then_ substituted the local model as a controlled experiment.
 
