@@ -6,3 +6,6 @@
 21/08/2026 [[AI Study Sessions — Session Four]]
 28/08/2026 [[AI Study Sessions — Session Five]]
 04/09/2026 [[AI Study Sessions — Session Six]]
+09/09/2026 [[AI Study Sessions — Session Seven]]
+15/09/2026 [[AI Study Sessions — Session Eight]]
+22/09/2026 [[AI Study Sessions — Session Nine]]

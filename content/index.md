@@ -19,3 +19,5 @@ Experiments with different systems
 Random thoughts coming to my mind, so I can focus of them whenever I have free time. ( Thinking better than looking into specific thoughts rather than scrolling down on social-media )
 
 Thanks for visiting. Feel free to wander around.
+
+Looking for my background, projects, or contact details? Head over to [sugeesh.dev](https://sugeesh.dev).

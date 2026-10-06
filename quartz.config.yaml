@@ -16,30 +16,31 @@ configuration:
     fontOrigin: googleFonts
     cdnCaching: true
     typography:
-      header: Schibsted Grotesk
-      body: Source Sans Pro
-      code: IBM Plex Mono
+      header: Poppins
+      body: Poppins
+      code: JetBrains Mono
+    # "gold saber" palette shared with sugeesh.dev, greenhouse and Ask Holocron (dark-only)
     colors:
       lightMode:
-        light: "#faf8f8"
-        lightgray: "#e5e5e5"
-        gray: "#b8b8b8"
-        darkgray: "#4e4e4e"
-        dark: "#2b2b2b"
-        secondary: "#284b63"
-        tertiary: "#84a59d"
-        highlight: rgba(143, 159, 169, 0.15)
-        textHighlight: "#fff23688"
+        light: "#19191a"
+        lightgray: "#333333"
+        gray: "#999999"
+        darkgray: "#d6d6d6"
+        dark: "#fafafa"
+        secondary: "#ffdb70"
+        tertiary: "#ffae3d"
+        highlight: rgba(255, 204, 77, 0.10)
+        textHighlight: rgba(255, 204, 77, 0.35)
       darkMode:
-        light: "#161618"
-        lightgray: "#393639"
-        gray: "#646464"
-        darkgray: "#d4d4d4"
-        dark: "#ebebec"
-        secondary: "#7b97aa"
-        tertiary: "#84a59d"
-        highlight: rgba(143, 159, 169, 0.15)
-        textHighlight: "#b3aa0288"
+        light: "#19191a"
+        lightgray: "#333333"
+        gray: "#999999"
+        darkgray: "#d6d6d6"
+        dark: "#fafafa"
+        secondary: "#ffdb70"
+        tertiary: "#ffae3d"
+        highlight: rgba(255, 204, 77, 0.10)
+        textHighlight: rgba(255, 204, 77, 0.35)
 plugins:
   - source: github:quartz-community/created-modified-date
     enabled: true
@@ -54,7 +55,7 @@ plugins:
     enabled: true
     options:
       theme:
-        light: github-light
+        light: github-dark
         dark: github-dark
       keepBackground: false
     order: 20
@@ -110,6 +111,17 @@ plugins:
     order: 92
   - source: github:quartz-community/fonts
     enabled: true
+    options:
+      body:
+        name: Poppins
+        weights: [300, 400, 600, 700]
+        includeItalic: true
+      header:
+        name: Poppins
+        weights: [600, 700]
+      code:
+        name: JetBrains Mono
+        weights: [400, 500]
   - source: github:quartz-community/remove-draft
     enabled: true
   - source: github:quartz-community/explicit-publish
@@ -196,7 +208,7 @@ plugins:
       position: left
       priority: 10
   - source: github:quartz-community/darkmode
-    enabled: true
+    enabled: false
     layout:
       position: left
       priority: 30
@@ -225,8 +237,9 @@ plugins:
     enabled: true
     options:
       links:
-        GitHub: https://github.com/jackyzha0/quartz
-        Discord Community: https://discord.gg/cRFFHYye7t
+        sugeesh.dev: https://sugeesh.dev
+        GitHub: https://github.com/sugeesh
+        RSS: https://garden.sugeesh.dev/index.xml
   - source: github:quartz-community/recent-notes
     enabled: false
   - source: github:quartz-community/spacer
@@ -262,7 +275,8 @@ plugins:
       name: quartz-themes
       repo: github:saberzero1/quartz-themes
       subdir: plugin
-    enabled: true
+    # replaced by the gold saber theme (colors above + quartz/styles/custom.scss)
+    enabled: false
     options:
       theme: default
   - source: github:quartz-community/obsidian-plugin-excalidraw

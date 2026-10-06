@@ -1,3 +1,237 @@
 @use "./variables.scss" as *;
 
-// put your custom CSS here!
+// "Gold saber" theme — shared with sugeesh.dev, the greenhouse and Ask Holocron.
+// Base colors and fonts live in quartz.config.yaml; this adds the starfield,
+// the lightsaber under page titles, and the mono labels.
+
+:root {
+  --gold-1: hsl(45, 100%, 72%);
+  --gold-2: hsl(35, 100%, 62%);
+  --grad-gold: linear-gradient(to right, hsl(45, 100%, 72%), hsl(35, 100%, 62%));
+  --saber-glow:
+    0 0 8px hsla(45, 100%, 65%, 0.9), 0 0 20px hsla(40, 100%, 60%, 0.7),
+    0 0 40px hsla(38, 100%, 55%, 0.4);
+  --green: hsl(140, 55%, 55%);
+  --card: hsl(240, 2%, 13%);
+  --faint: hsl(0, 0%, 42%);
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+
+// ---------- starfield + amber glow ----------
+// A tiled star layer with an odd tile size so the repeat isn't obvious,
+// plus a second, offset layer that twinkles.
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+body::before {
+  background:
+    radial-gradient(ellipse 65% 45% at 50% -12%, hsla(40, 100%, 60%, 0.1), transparent 70%),
+    radial-gradient(1px 1px at 23px 41px, #fff, transparent),
+    radial-gradient(1px 1px at 117px 163px, hsla(0, 0%, 100%, 0.7), transparent),
+    radial-gradient(1.5px 1.5px at 201px 77px, hsla(0, 0%, 100%, 0.8), transparent),
+    radial-gradient(1px 1px at 61px 229px, hsla(0, 0%, 100%, 0.5), transparent),
+    radial-gradient(1px 1px at 311px 19px, hsla(0, 0%, 100%, 0.6), transparent),
+    radial-gradient(1px 1px at 167px 289px, hsla(0, 0%, 100%, 0.45), transparent),
+    radial-gradient(1.5px 1.5px at 347px 211px, hsl(45, 100%, 80%), transparent),
+    radial-gradient(1px 1px at 89px 331px, hsla(0, 0%, 100%, 0.6), transparent),
+    radial-gradient(1px 1px at 263px 359px, hsla(0, 0%, 100%, 0.5), transparent),
+    radial-gradient(1px 1px at 383px 127px, hsla(0, 0%, 100%, 0.35), transparent);
+  background-size:
+    100% 100%,
+    397px 397px,
+    397px 397px,
+    397px 397px,
+    397px 397px,
+    397px 397px,
+    397px 397px,
+    397px 397px,
+    397px 397px,
+    397px 397px,
+    397px 397px;
+  background-repeat:
+    no-repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat;
+  opacity: 0.75;
+}
+
+body::after {
+  background-image:
+    radial-gradient(1.5px 1.5px at 37px 59px, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 149px 23px, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 223px 181px, hsl(45, 100%, 80%), transparent),
+    radial-gradient(1.5px 1.5px at 71px 157px, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 251px 103px, #fff, transparent);
+  background-size: 283px 283px;
+  animation: garden-twinkle 4.5s ease-in-out infinite;
+}
+
+@keyframes garden-twinkle {
+  0%,
+  100% {
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+// the explorer column paints its own background on desktop; let the stars through
+@media all and #{$desktop} {
+  .page > #quartz-body .sidebar.left:has(.explorer) {
+    background-color: transparent;
+  }
+}
+
+// ---------- site title ----------
+.page-title,
+.page-title a {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  background: var(--grad-gold);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+// ---------- article title + lightsaber ----------
+h1.article-title {
+  position: relative;
+  width: max-content;
+  max-width: 100%;
+  margin-bottom: 1.6rem;
+  padding-bottom: 0.9rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  background: var(--grad-gold);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: min(340px, 80%);
+    height: 4px;
+    border-radius: 4px;
+    background: var(--grad-gold);
+    box-shadow: var(--saber-glow);
+    transform-origin: left;
+    animation: garden-ignite 900ms cubic-bezier(0.2, 0.8, 0.2, 1) 150ms both;
+  }
+}
+
+@keyframes garden-ignite {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+// ---------- mono kicker labels (breadcrumbs, dates, sidebar headings) ----------
+.breadcrumb-container,
+p.content-meta {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.breadcrumb-element a {
+  color: var(--gray);
+}
+
+.breadcrumb-element a:hover {
+  color: var(--gold-1);
+}
+
+.explorer .title-button h2,
+.graph > h3,
+.backlinks > h3,
+.toc h3,
+.toc-header h3 {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+// ---------- body content ----------
+article {
+  h2,
+  h3,
+  h4 {
+    color: var(--dark);
+    letter-spacing: -0.01em;
+  }
+
+  h2 {
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid var(--lightgray);
+  }
+
+  blockquote {
+    border-left: 2px solid var(--gold-1);
+    background: var(--highlight);
+    border-radius: 0 8px 8px 0;
+    padding: 0.2rem 1rem;
+  }
+
+  hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--lightgray), transparent);
+  }
+}
+
+a.internal {
+  border-radius: 4px;
+}
+
+// ---------- cards: graph, search, popovers ----------
+.graph > .graph-outer,
+.popover > .popover-inner {
+  background-color: var(--card);
+  border-color: var(--lightgray);
+  border-radius: 12px;
+}
+
+.search > .search-button {
+  background-color: var(--card);
+  border: 1px solid var(--lightgray);
+  border-radius: 10px;
+}
+
+// ---------- footer sign-off, same as the greenhouse ----------
+footer::after {
+  content: "// may the source be with you";
+  display: block;
+  margin-top: 0.8rem;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--faint);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::after,
+  h1.article-title::after {
+    animation: none;
+  }
+
+  body::after {
+    opacity: 0.5;
+  }
+}

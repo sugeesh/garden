@@ -6,13 +6,11 @@ We paired that with a first proper look at retrieval-augmented generation, and t
 
 So the session had two halves and one idea: putting meaning into a vector space, and getting it back out again.
 
-The first half finished the model — sweeping for a learning rate instead of guessing, splitting the data three ways, and finally looking at the embedding table it had trained. The second half crossed over to retrieval: why RAG exists, the two pipelines, the three ways of finding a chunk, and why retrieval fails, which we demonstrated rather than described.
+The first half finished the model, sweeping for a learning rate instead of guessing, splitting the data three ways, and finally looking at the embedding table it had trained. The second half crossed over to retrieval: why RAG exists, the two pipelines, the three ways of finding a chunk, and why retrieval fails, which we demonstrated rather than described.
 
 The connecting sentence, worth stating plainly: the first half trains a tiny embedding table from scratch, and the second half borrows an enormous one. The lookup is identical. Only the scale and the training objective change.
 
-> 27 rows and 2 dimensions, learned from about 200,000 names
-> against
-> 30,000+ tokens and 1,536 dimensions, learned from the internet
+> 27 rows and 2 dimensions
 
 In the systems we will actually ship, nobody trains the embedding. It gets called. Everything else is the same idea.
 
