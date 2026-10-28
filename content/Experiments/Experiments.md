@@ -7,3 +7,4 @@ modified: 2026-10-06
 [[Installing Ollama on Ubuntu]]
 [[Wallpaper Rotator for Ubuntu]]
 [[AskHolocron]]
+[[Teaching an AI to Play Slither.io]]

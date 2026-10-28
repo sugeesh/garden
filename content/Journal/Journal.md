@@ -12,3 +12,6 @@ modified: 2026-10-06
 09/09/2026 [[AI Study Sessions — Session Seven]]
 15/09/2026 [[AI Study Sessions — Session Eight]]
 22/09/2026 [[AI Study Sessions — Session Nine]]
+05/10/2026 [[AI Study Sessions — Session Ten]]
+09/10/2026 [[AI Study Sessions — Session Eleven]]
+13/10/2026 [[AI Study Sessions — Session Twelve]]
