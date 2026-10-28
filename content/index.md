@@ -1,4 +1,5 @@
 ---
+modified: 2026-10-06
 title: Sugeesh’s Digital Garden
 ---
 Welcome to my digital garden, a public space for notes, ideas, projects, questions, and things I’m learning as I go.

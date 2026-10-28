@@ -1,3 +1,6 @@
+---
+modified: 2026-10-06
+---
 
 ## **askholocron.sugeesh.dev — what I built and what broke**
 

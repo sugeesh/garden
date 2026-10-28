@@ -1,3 +1,6 @@
+---
+modified: 2026-08-21
+---
 Date - 21/08/2026
 
 This session was the return trip from the detour.

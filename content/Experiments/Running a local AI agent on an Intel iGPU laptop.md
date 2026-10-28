@@ -1,3 +1,6 @@
+---
+modified: 2026-09-06
+---
 
 
 I got OpenClaw running against a local Ollama model on a Core Ultra 7 255H with 32GB RAM and no discrete GPU. It went from _freezing the laptop on the word "Hi"_ to an 80-second cold start and 20-second follow-ups. Here are the measurements, the dead ends, and the four config changes that actually mattered.

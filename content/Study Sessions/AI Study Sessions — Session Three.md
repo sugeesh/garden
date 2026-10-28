@@ -1,3 +1,6 @@
+---
+modified: 2026-08-11
+---
 Date - 11/08/2026
 
 Our plan for this session was to complete the remaining half of Andrej Karpathy's _makemore_ part 1, which reframes the counting bigram model from Session Two as a neural network.

@@ -1,3 +1,6 @@
+---
+modified: 2026-09-04
+---
 Date - 04/09/2026
 
 Session Five deliberately stopped the moment a first loss number appeared, leaving the training half of makemore part 2 for today. Every open question at the end of that session is an item in the first half of this one: the learning rate search, the three-way data split, and the embedding plot.

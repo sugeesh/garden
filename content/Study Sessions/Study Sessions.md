@@ -1,3 +1,6 @@
+---
+modified: 2026-09-06
+---
 I’ve started a small AI systems study group with a few friends.
 
 The goal is not to race through every new framework or collect a list of AI tools. We want to understand the systems underneath them: how models behave, how agents use tools, how retrieval fails, how evaluations should be designed, and what it takes to operate these systems reliably.
@@ -23,3 +26,6 @@ We’re not approaching this as experts with all the answers. We’re creating a
 21/08/2026 [[AI Study Sessions — Session Four]]
 28/08/2026 [[AI Study Sessions — Session Five]]
 04/09/2026 [[AI Study Sessions — Session Six]]
+09/09/2026 [[AI Study Sessions — Session Seven]]
+15/09/2026 [[AI Study Sessions — Session Eight]]
+22/09/2026 [[AI Study Sessions — Session Nine]]

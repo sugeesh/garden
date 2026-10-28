@@ -1,3 +1,6 @@
+---
+modified: 2026-10-06
+---
 
 I strongly believe that if you really understand something correctly, you should be able to teach it in a simple manner to anybody. Whether they understand it or not is up to them, but you should be able to provide the explanation flawlessly without struggling throughout the story.
 

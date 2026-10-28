@@ -1,3 +1,6 @@
+---
+modified: 2026-10-06
+---
 I wanted something simple: a new wallpaper on my Ubuntu desktop every day, picked from a folder of images I already had. I also wanted a small icon in the top bar so I could skip to the next one when I didn't like the day's pick.  
 
 That sounds like a solved problem, and it probably is. But every time I go looking for a tool like this, the same thing happens. I find apps that haven't been updated in years, apps that do far more than I need, apps that want to download images from somewhere I didn't ask for, or apps that simply don't work on the latest Ubuntu. Then I spend an evening installing, testing, and uninstalling things.

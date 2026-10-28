@@ -1,3 +1,6 @@
+---
+modified: 2026-09-22
+---
 Date - 22/09/2026
 
 Session Eight ended with agents that call tools, and tools that are Python functions living inside the agent's own process.

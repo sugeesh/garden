@@ -1,3 +1,6 @@
+---
+modified: 2026-08-31
+---
 
 How I got Qwen3-4B running fully GPU-accelerated on a ThinkPad E14 with integrated graphics, Docker, and Ollama.
 

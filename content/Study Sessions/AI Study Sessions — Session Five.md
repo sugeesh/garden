@@ -1,3 +1,6 @@
+---
+modified: 2026-08-28
+---
 Date - 28/08/2026
 
 Our plan for this session was makemore part 2, which builds a multi-layer perceptron language model with learned embeddings.

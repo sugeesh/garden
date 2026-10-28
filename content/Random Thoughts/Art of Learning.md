@@ -1,3 +1,6 @@
+---
+modified: 2026-10-06
+---
 I think most important thing for a successful knowledge worker is having a mechanism/framework for learning. Because personally I feel in a  knowledge working environment, it is easy to getting behind time to time. 
 
 This is mostly happening when you are living in a comfortable safezone posion. Money is good, work is occupying your almost all of the time, so you don't have additional time to spent for update with the world. Problem is after a while you realize, you are far behind with some obivious areas. I have two kind of that experience though my career so far.  Luckily I have a framework of learning, which I build through out the years that works with me, but unfortunately this ( my framework ) takes much time compare to other methods use by many others. My learning framework is building around a reference book. 

@@ -1,3 +1,6 @@
+---
+modified: 2026-09-15
+---
 Date - 15/09/2026
 
 The plan for this session was hybrid search fusion in the first half and the LangChain agent module in the second.

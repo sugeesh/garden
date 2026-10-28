@@ -1,3 +1,6 @@
+---
+modified: 2026-09-09
+---
 Date - 09/09/2026
 
 Session Six ended with a working retrieval pipeline and an uncomfortable question left hanging: what happens when semantic similarity is the wrong tool for the query?
