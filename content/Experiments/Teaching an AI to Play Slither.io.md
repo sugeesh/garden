@@ -7,7 +7,7 @@ modified: 2026-10-28
 
 No hidden bot inside the page, no game APIs. The agent only sees screenshots, just like a human player, and every move comes from a model.
 
-<video src="./resources/slitherio.webm" autoplay loop muted playsinline controls></video>
+![The agent playing slither.io](resources/slitherio.gif)
 
 **Why a game?** Games give instant feedback. When the agent makes a bad decision, the snake dies, and you see it straight away. That makes it a great way to learn how agents actually behave, not how they behave in a demo.
 
