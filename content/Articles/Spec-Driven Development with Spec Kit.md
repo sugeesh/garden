@@ -1,10 +1,12 @@
-
+---
+modified: 2026-11-17
+---
 Nov 17, 2026 
 ## Why Spec-Driven Development
 
-In the previous era, we considered code the ultimate source of truth. We used supporting documents to build the correct code. If changes came up, we changed the behaviour of the application by changing the code, and updated the supporting documents as a secondary task, as part of project maintenance.
+For decades, the code was the application. Documents guided us toward the right code, but fell out of date in the long run, while the code never lied. Change meant editing code first and patching the paperwork later.
 
-With coding agents and vibe coding, a new problem has come up, the agent produces exactly what it is asked for, and mistakes in the prompts might not be immediately reflected and caught, but would show up later in the application. This makes the code unreliable, which usually creates uncertainty throughout the project. There was a need to store these prompts and keep track of them alongside the generated code, so we could identify the mistakes later on.
+With the use of coding agents, a new problem has come up, the agent produces exactly what it is asked for, so a mistake in the prompt goes straight into the code. This makes the code unreliable, which usually creates uncertainty throughout the project. To trace mistakes back to their source, prompts need to be stored and versioned alongside the code they produce.
 
 Spec-driven development (SDD) offers a solution to this problem. In SDD, we consider the specification the source of truth and generate the code from it. A precise spec is written and reviewed first, a technical plan is derived from it, and the code is generated to satisfy both. When a behaviour change is needed, we should change the spec and regenerate the code, not change the code directly without going through the spec.
 
@@ -22,8 +24,8 @@ This article is based on "Johan Smarius" talk in "NDC Copenhagen 2026" on ["Is S
 
 ## Core rules
 
-![[spec-kit-3.png]]*%%[Johan Smarius - NDC Copenhagen 2026](https://www.youtube.com/watch?v=C0H-_zdfXIc)%%*
-
+![[spec-kit-3.png]]
+*From [Johan Smarius - NDC Copenhagen 2026](https://www.youtube.com/watch?v=C0H-_zdfXIc)*
 
 1. **No code before an approved spec.** The spec says what and why. It never names a framework, a table or an endpoint.
 2. **We own every gate.** Claude drafts the spec, plan and tasks. We read, correct and approve each one before running the next command.
@@ -64,7 +66,7 @@ Everyone on the team uses the same tag, because command names and file locations
 
 ```text
 helpline-assistant-project/
-├── CLAUDE.md                    project context Claude Code reads every session
+|
 ├── .claude/
 │   └── skills/
 │       ├── speckit-constitution/
@@ -106,8 +108,6 @@ helpline-assistant-project/
     └── architecture.md              living description of the whole system
 ```
 
-Everything above is committed except `.specify/feature.json` and local settings files.
-
 ## The workflow
 
 Every feature runs the same nine commands in the same order, and we stop to review after each one. The constitution is written once per project; the rest repeat per feature.
@@ -136,7 +136,6 @@ The same sequence, grouped the way we will remember it: write, design, build and
 Steps 2, 4 and 6 are optional in the tool.  ( Additionally , `/speckit-taskstoissues`, turns `tasks.md` into GitHub issues )
 
 Better to start a fresh Claude Code session (or `/clear`) between plan and implement on large features. The files carry all the context, so nothing is lost and the model works with a clean window.
-
 
 
 ## Example : Url Shortner
@@ -170,7 +169,7 @@ day for the last 30 days. Users only see and manage their own links.
 95% of redirects must complete within 50 ms with 1 million stored links.
 ```
 
-Claude creates `specs/001-url-shortener/spec.md`. A good result contains prioritized user stories, numbered requirements and measurable success criteria. If the spec mentions FastAPI, a table name or an HTTP status code, delete it. Those belong in the plan.
+Claude creates `specs/001-url-shortener/spec.md`. I will contains prioritized user stories, numbered requirements and measurable success criteria. There will be no implementation details in these spec files.
 
 ### Step 2: Clarify
 
@@ -183,8 +182,6 @@ Each of these would otherwise have been guessed by the model during implementati
 **`checklists/requirements.md`**
 
 Specify generates this file automatically. It checks the spec, not the code. You tick each item the spec satisfies, and fix the spec where it does not.
-
-A focused checklist from `/speckit-checklist security` looks the same but asks security domain questions.
 
 ### Step 3: Plan
 
