@@ -53,13 +53,13 @@ claude
 
 Everyone on the team uses the same tag, because command names and file locations have changed between releases.
 
-`specify init` writes three things into the repository. Commit all of them.
+`specify init` writes following things into the repository. Commit all of them.
 
 | Path                        | What it holds                                           | Who edits it                                               |
 | --------------------------- | ------------------------------------------------------- | ---------------------------------------------------------- |
 | `.specify/`                 | Templates, helper scripts, and `memory/constitution.md` | We edit the constitution; leave scripts alone              |
 | `.claude/skills/speckit-*/` | One skill per workflow command                          | Nobody; upgraded with `specify integration upgrade claude` |
-| `CLAUDE.md`                 | Project context Claude Code reads on every session      | We, as the project grows                                   |
+
 
 ## Project structure
 
