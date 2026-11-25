@@ -156,4 +156,4 @@ Longer context and learned representations. We move to makemore part 2, which im
 
 ## Session
 
-https://youtu.be/6DAu-vs3yiw
+https://www.youtube.com/watch?v=uIoI-f8zvrM

@@ -78,3 +78,4 @@ The bridge between them is the interesting part: expose the retrieval endpoint a
 [[session-7-hybrid-search.pdf]]
 
 ## Session
+https://www.youtube.com/watch?v=4CkASJJDf1U

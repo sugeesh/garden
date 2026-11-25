@@ -193,4 +193,4 @@ From there, we will gradually move toward longer contexts, embeddings, self-atte
 
 ## Session
 
-https://youtu.be/kKNs7jlFm18
+https://www.youtube.com/watch?v=YAcpojRXx_0&t=614s

@@ -97,3 +97,4 @@ LangSmith can also read across traces and produce an insights report that groups
 [[Session 12 — Production Monitoring for AI Agents.pdf]]
 
 ## Session
+https://www.youtube.com/watch?v=ycwpjfoqz8k

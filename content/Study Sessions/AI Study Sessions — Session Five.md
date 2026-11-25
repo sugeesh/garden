@@ -165,4 +165,4 @@ The theory is still timeboxed. This session earns its hour on application-layer 
 
 ## Session
 
-https://youtu.be/B5Vc2--GkPg
+https://www.youtube.com/watch?v=4J4PWmWPLYY

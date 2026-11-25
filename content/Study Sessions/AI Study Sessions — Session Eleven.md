@@ -135,3 +135,4 @@ The course closes on the idea that production traffic is the only real record of
 [[Session 11 — Building Reliable Agents with LangSmith.pdf]]
 
 ## Session
+https://www.youtube.com/watch?v=dpJ8dkzrbj4

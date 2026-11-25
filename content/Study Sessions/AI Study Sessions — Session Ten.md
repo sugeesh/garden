@@ -97,13 +97,6 @@ The human-in-the-loop agent behaved well there, too. Asked to reply to an email,
 
 > Anything you pass in at invoke time has no way in through a chat window. If the agent needs it, it has to come through a message or a tool.
 
-## Resources
 
-- LangChain documentation — `create_agent`, runtime context and state, middleware
-- `SummarizationMiddleware` and `HumanInTheLoopMiddleware`, and `Command` from `langgraph.types`
-- LangGraph CLI — `langgraph dev` with a `langgraph.json` config
-- LangSmith Studio
-- Agent Chat UI — `langchain-ai/agent-chat-ui`
-- LangChain Academy — the multi-agent wedding planner, with the Kiwi.com MCP server
-- Deep Agents — `deepagents`
-
+## Session
+https://www.youtube.com/watch?v=kluHK1P_2S4
